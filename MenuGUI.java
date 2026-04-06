@@ -24,8 +24,7 @@ import javafx.stage.Stage;
  * JavaFX GUI application with a menu bar containing four menu options:
  * 1. Show Date/Time - displays current date and time in text area
  * 2. Save to Log - writes text area contents to log.txt
- * 3. Change Color - changes background to a new random shade of green each
- * click
+ * 3. Change Color - changes background to a random shade of green generated at startup
  * 4. Exit - exits application
  */
 public class MenuGUI extends Application {
@@ -33,14 +32,17 @@ public class MenuGUI extends Application {
     private BorderPane root;
     private final Random rng = new Random();
 
+    // Class-level field — generated once at startup
+    private final Color randomGreen = generateRandomGreen();
+
     @Override
     public void start(Stage primaryStage) {
         root = new BorderPane();
         root.setPadding(new Insets(10));
 
-        /* 
-        * Text Area
-        */
+        /*
+         * Text Area
+         */
         textArea = new TextArea();
         textArea.setEditable(false);
         textArea.setWrapText(true);
@@ -49,8 +51,8 @@ public class MenuGUI extends Application {
         root.setCenter(textArea);
 
         /*
-        * Menu
-        */
+         * Menu
+         */
         Menu menu = new Menu("Options");
 
         MenuItem showDateTime = new MenuItem("1. Show Date and Time");
@@ -64,8 +66,8 @@ public class MenuGUI extends Application {
         root.setTop(menuBar);
 
         /*
-        * Event Handlers
-        */
+         * Event Handlers
+         */
         // Menu Option 1 - Show Date and Time
         showDateTime.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -99,7 +101,6 @@ public class MenuGUI extends Application {
         changeColor.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Color randomGreen = generateRandomGreen();
                 root.setBackground(new Background(
                         new BackgroundFill(randomGreen, CornerRadii.EMPTY, Insets.EMPTY)));
 
@@ -120,8 +121,8 @@ public class MenuGUI extends Application {
         });
 
         /*
-        * Scene
-        */
+         * Scene
+         */
         Scene scene = new Scene(root, 600, 460);
         primaryStage.setTitle("Menu GUI");
         primaryStage.setScene(scene);
